@@ -7,15 +7,11 @@ let input = '34:67';
 let hours;
 let minutes;
 let hasPm = false;
-let hasAm = false;
-
 
 if (input.toLowerCase().indexOf('pm') !== - 1) {
     hasPm = true;
-}
-
-if (input.toLowerCase().indexOf('am') !== - 1) {
-    hasAm = true;
+} else if (input.toLowerCase().indexOf('am') === - 1) {
+    alert('Нельзя нормализоваться')
 }
 
 let part = input.replace(/\D/g, ' ')
@@ -32,7 +28,7 @@ if (part.length > 1) {
             hours += 12;
         }
 
-        if (hasAm && hours === 12) {
+        if (!hasPm && hours === 12) {
             hours = 0;
         }
 
