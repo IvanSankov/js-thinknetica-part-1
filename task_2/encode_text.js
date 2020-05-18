@@ -39,7 +39,7 @@ function encodeText(text) {
     let encodedText = splitedText.reduce((acc, currVal, currIndex, arr) => {
         acc += data.wordMapCode[currVal];
         if (currIndex !== arr.length - 1) {
-            acc += '-';
+            acc += ',';
         }
 
         return acc
