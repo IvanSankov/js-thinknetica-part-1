@@ -22,7 +22,7 @@ function eRegistration(ticket, fullName, nowTime) {
     }
 
     let flight = flights[flightName];
-    if (!flightName) {
+    if (!flight) {
         throw new Error('Рейс не найден.');
     }
 
