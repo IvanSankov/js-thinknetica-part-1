@@ -1,23 +1,25 @@
 // Реализовать аналог методов map и filter массива используя метод reduce массива
 
 // filter
-let inputFilter = [1,2,3,4,5,6];
-let outputFilter = inputFilter.reduce((acc, curr) => {
-    if (curr % 2 === 0) {
-        acc.push(curr)
-    }
+function filterByReduce(arr, fn) {
+    return arr.reduce((acc, curr) => {
+        if (fn(curr))
+            acc.push(curr);
 
-    return acc;
-}, []);
+        return acc;
+    }, [])
+}
 
 // map
-let inputMap = [1,2,3,4,5,6];
-let outputMap = inputMap.reduce((acc, curr) => {
-    acc.push(curr * curr);
-    return acc;
-}, []);
+function mapByReduce(arr, fn) {
+    return arr.reduce((acc, curr) => {
+        acc.push(fn(curr));
+        return acc;
+    }, [])
+}
 
+console.log(filterByReduce([-1,-2,3,4,-5], f));
 
-console.log(outputFilter);
-console.log('----------');
-console.log(outputMap);
+function f(x) {
+    return x > 0
+}
