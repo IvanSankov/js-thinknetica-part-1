@@ -26,15 +26,18 @@ function eRegistration(ticket, fullName, nowTime) {
         throw new Error('Рейс не найден.');
     }
 
-    let flightTicketIndex = flight.tickets.reduce((acc, currVal, currIndex) => {
+    let flightTicket = flight.tickets.reduce((acc, currVal, currIndex) => {
         if (currVal.id === ticket && currVal.fullName === fullName) {
-            acc = currIndex;
+            acc.index = currIndex;
+            acc.ticket = currVal;
         }
         return acc;
-    }, -1);
+    }, {index: null, ticket: null});
 
-    if (flightTicketIndex === -1) {
+    if (!flightTicket.index) {
         throw new Error('Билета с таким номером и именем пассажира нет в списке купленных.');
+    } else if (!flightTicket.ticket.registrationTime) {
+        throw new Error('Билет уже был зарегестрирован.');
     }
 
     if (flight.registrationStarts < nowTime && nowTime < flight.registartionEnds) {
@@ -43,7 +46,7 @@ function eRegistration(ticket, fullName, nowTime) {
         // просто заменить на return flight.registrationStarts < nowTime && nowTime < flight.registartionEnds
         // Еще я не стал обрабатывать случай, когда уже зарегестрированного человека пытаются еще раз зарегестировать,
         // т.к. этого тоже не было в контракте.
-        flight.tickets[flightTicketIndex]['registrationTime'] = nowTime;
+        flight.tickets[flightTicket.index]['registrationTime'] = nowTime;
         return true;
     }
 
