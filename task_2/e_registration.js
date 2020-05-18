@@ -36,7 +36,7 @@ function eRegistration(ticket, fullName, nowTime) {
 
     if (!flightTicket.index) {
         throw new Error('Билета с таким номером и именем пассажира нет в списке купленных.');
-    } else if (!flightTicket.ticket.registrationTime) {
+    } else if (flightTicket.ticket.registrationTime) {
         throw new Error('Билет уже был зарегестрирован.');
     }
 
