@@ -137,7 +137,7 @@ function flightReport(flight, nowTime) {
         flight,
         registration: flightObj.registrationStarts < nowTime && nowTime < flightObj.registartionEnds,
         complete: flightObj.registartionEnds < nowTime,
-        countOfSeats: flightObj.seats + flightObj.businessSeats,
+        countOfSeats: flightObj.seats,
         registeredSeats: flightObj.tickets.length,
         reservedSeats: flightObj.tickets.reduce((acc, curr) => curr.registrationTime ? acc + 1 : acc, 0),
         countOfReservations: flightObj.countOfReservations,
