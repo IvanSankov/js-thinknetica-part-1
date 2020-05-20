@@ -19,10 +19,6 @@ describe('Тестируем функцию sumOfPositive', function () {
         assert.equal(sumOfPositive([1, "qwe", {}, []]), 'error');
     });
 
-    it('Передаем массив "[-91, -93, -45, 67, 96, 40, -34, 96, -42, 58]"', function () {
-        assert.deepEqual(sumOfPositive([-91, -93, -45, 67, 96, 40, -34, 96, -42, 58]), {count: 5, sum: 357});
-    });
-
     it('Передаем пустой массив "[]"', function () {
         assert.deepEqual(sumOfPositive([]), {count: 0, sum: 0});
     });
@@ -41,5 +37,9 @@ describe('Тестируем функцию sumOfPositive', function () {
 
     it('Передаем только положительные значения "[1,2,3,4,25, 10]"', function () {
         assert.deepEqual(sumOfPositive([1, 2, 3, 4, 25, 10]), {count: 6, sum: 45});
+    });
+
+    it('Передаем массив "[-91, -93, -45, 67, 96, 40, -34, 96, -42, 58]"', function () {
+        assert.deepEqual(sumOfPositive([-91, -93, -45, 67, 96, 40, -34, 96, -42, 58]), {count: 5, sum: 357});
     });
 });
