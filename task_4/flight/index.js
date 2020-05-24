@@ -69,4 +69,4 @@ function flightDetails(flightName) {
     container.append(ul);
 }
 
-flightDetails('BH118');
+ flightDetails('BH118');
