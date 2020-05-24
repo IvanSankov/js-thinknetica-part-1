@@ -22,5 +22,3 @@ function parseTemplate(htmlElement, map) {
         Array.from(htmlElement.children).forEach(elem => parseTemplate(elem, map))
     }
 }
-
-parseTemplate(document.getElementById('item1'), {title: 'qqq', description: 'aaaaaa'});
