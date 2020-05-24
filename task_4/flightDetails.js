@@ -1,6 +1,6 @@
-//  Реализовать функцию flightDetails(flightName) которая принимает объект рейса и будет выводить в контейнер
-//  <div id=”flight-details”></div> отчет по рейсу и отображать список купленных билетов: номер билета, место, полное
-//  имя пассажира, прошел ли регистрацию на рейс.
+ // Реализовать функцию flightDetails(flightName) которая принимает объект рейса и будет выводить в контейнер
+ // <div id=”flight-details”></div> отчет по рейсу и отображать список купленных билетов: номер билета, место, полное
+ // имя пассажира, прошел ли регистрацию на рейс.
 
 "use strict";
 
@@ -56,10 +56,12 @@ function flightDetails(flightName) {
 
     flights[flightName].tickets.forEach(elem => {
         let cloneTemplate = template.content.cloneNode(true);
+
         cloneTemplate.querySelector('.ticket-id').innerText = elem.id;
         cloneTemplate.querySelector('.ticket-seat').innerText = elem.seat;
         cloneTemplate.querySelector('.ticket-fullName').innerText = elem.fullName;
         cloneTemplate.querySelector('.has-registration').innerText = elem.registrationTime ? 'Yes': 'No';
+
         ul.append(cloneTemplate);
     });
 
