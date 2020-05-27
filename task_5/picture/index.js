@@ -1,13 +1,30 @@
 'use strict';
 
 // Задаем все необходимые переменные
-const settings = {backgroundColor: null};
+const settings = {backgroundColor: null, mousedown: false};
 let table = document.querySelector('table');
 let input = document.getElementById('input-color');
+
 
 // Навешиваем все события
 input.addEventListener('keyup', keyup);
 table.addEventListener('click', click);
+
+// следующие три события отвечают за то, чтобы можно было зажать кнопку мыши и закрашивать клетки
+table.addEventListener('mousedown', function (event) {
+    settings.mousedown = true;
+});
+
+table.addEventListener('mouseup', function (event) {
+    settings.mousedown = false;
+});
+
+table.addEventListener('mouseover', function (event) {
+    if (settings.mousedown) {
+        paintOver(event);
+    }
+});
+
 
 // инициализируем данные
 fillTable(table);
@@ -42,6 +59,15 @@ function keyup(event) {
  * @param {MouseEvent} event
  */
 function click(event) {
+    paintOver(event);
+}
+
+/**
+ * Функция, которая закрашивает блок td в таблице
+ *
+ * @param {MouseEvent} event
+ */
+function paintOver(event) {
     if (event.target.tagName !== 'TD') {
         return;
     }
