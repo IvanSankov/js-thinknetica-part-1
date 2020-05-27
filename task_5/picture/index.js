@@ -1,14 +1,18 @@
 "use strict";
 
+// Задаем все необходимые переменные
 const settings = {backgroundColor: null};
 let table = document.querySelector('table');
 let input = document.getElementById('input-color');
 
+// Навешиваем все события
 input.addEventListener('keyup', keyup);
 table.addEventListener('click', click);
 
+// инициализируем данные
 fillTable(table);
 setBackgroundColor(input);
+
 
 /**
  * Функция устанавливает цвет заливки
