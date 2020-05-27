@@ -1,0 +1,27 @@
+#input {
+    float: left;
+    display: block;
+    width: 300px;
+    margin: 2px;
+}
+
+#color {
+    float: left;
+    display: block;
+    width: 300px;
+    height: 20px;
+    margin: 2px;
+}
+
+
+table {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+}
+
+table tr td {
+    width: 10px;
+    height: 10px;
+    border: 1px solid gray;
+}
