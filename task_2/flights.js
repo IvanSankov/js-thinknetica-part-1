@@ -204,7 +204,7 @@ let flights = {
         countOfReservations: 0,
         countOfReverts: 0,
         registrationStarts: makeTime(10, 0),
-        registartionEnds: makeTime(15, 0),
+        registartionEnds: makeTime(20, 0),
         tickets: [
             {
                 id: 'BH118-B50',

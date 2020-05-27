@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Задаем все необходимые переменные
 const settings = {backgroundColor: null};
