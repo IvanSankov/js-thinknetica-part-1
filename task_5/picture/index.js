@@ -4,7 +4,7 @@ const settings = {backgroundColor: null};
 let table = document.querySelector('table');
 let input = document.getElementById('input-color');
 
-input.addEventListener('keydown', keydown);
+input.addEventListener('keyup', keyup);
 table.addEventListener('click', click);
 
 fillTable(table);
@@ -28,7 +28,7 @@ function setBackgroundColor(input) {
  * Функция-обработчик нажатие клавиши на поле input
  * @param {KeyboardEvent} event
  */
-function keydown(event) {
+function keyup(event) {
     setBackgroundColor(event.target);
 }
 
