@@ -36,7 +36,7 @@ setBackgroundColor(input);
  * @param {HTMLInputElement} input
  */
 function setBackgroundColor(input) {
-    let target = document.getElementById(input.dataset.target);
+    const target = document.getElementById(input.dataset.target);
     if (!target) {
         return;
     }
@@ -90,9 +90,9 @@ function paintOver(event) {
 function fillTable(table, rowCount = 50, columnCount= 50) {
 
     for (let rowNumber = 0; rowNumber < rowCount; rowNumber++) {
-        let tr = document.createElement('tr');
+        const tr = document.createElement('tr');
         for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
-            let td = document.createElement('td');
+            const td = document.createElement('td');
             tr.append(td);
         }
         table.append(tr);
