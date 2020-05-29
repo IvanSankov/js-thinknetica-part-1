@@ -1,94 +1,193 @@
 'use strict';
 
+// Итак, глянул на своем телефоне, как там работает калькулятор и реализовал такой же. Работает он по следующему
+// принципу: вводим первое число, как только выбрали знак, скрипт будет ожидать следующее число, после его ввода,
+// если нажать равно, будет результат, если нажать любой другой знак, то будет результат и платформа снова будет ждать
+// второе число. Пример:
+// 1. Вначале 0, вводим 12, нажимаем "+", платформа ждет второе слагаемое, вводим 3, жмем "=", получаем результат 15.
+// 2. Вначале 0, вводим 12, нажимаем "+", платформа ждет второе слагаемое, вводим 3, жмем "*", получаем результат 15 и
+// скрипт ждет второе второе число, на которое он умножит 15.
+
+
 // Инициализируем переменные
-const outputTag = document.querySelector('h1');
-const form = document.getElementById('calculator-form');
-const formInput = document.getElementById('calculator-form-input');
+const expression = {
+    firstNumber: 0,
+    sign: null,
+    secondNumber: null,
+};
+const calculatorDisplay = document.getElementById('calculator-display');
 const buttonsWrapper = document.getElementById('buttons-wrapper');
 
 
-// Инициализируем все события
-form.addEventListener('submit', submit);
-buttonsWrapper.addEventListener('click', click);
+// Навешиваем события
+buttonsWrapper.addEventListener('click', buttonClick);
+document.addEventListener('keydown', keydown);
 
 
 /**
- * Функция-обработчик события submit формы
+ * Функция-обработчик нажатия клавиш на физической клавиатуре пользователя
  *
- * @param {Event} event
+ * @param {KeyboardEvent} event
  */
-function submit(event) {
-    event.preventDefault();
-    calculate();
+function keydown(event) {
+    const isInteger = !isNaN(parseInt(event.key));
+
+    if (isInteger) {
+        handlerNumber(event.key);
+        return;
+    }
+
+    let sign = determineSignBy(event);
+    if (sign !== '') {
+        handlerSign(sign);
+        markSign( document.querySelector(`[data-sign="${sign}"]`) );
+    }
 }
 
 /**
- * Функция-обработчик события клика на кнопку виртуальной клавиатуры
+ * Функция, определяющая по введенному символу, какому знаку калькулятора он соответствует
+ *
+ * @param {KeyboardEvent} event
+ * @return {string}
+ */
+function determineSignBy(event) {
+    const signs = ['+', '-', '/', '*', '='];
+
+    if (signs.includes(event.key)) {
+        return event.key
+    }
+
+    let sign = '';
+    switch (event.code) {
+        case 'Escape':
+            sign = 'c';
+            break;
+        // В общем я тут хотел сделать, чтобы по нажатию Space или Enter у меня выводился результат, как будто бы я
+        // нажимаю "=", однако из-за того, что у меня элементы типа button, Space и Enter помимо евента еще кликают на
+        // последнюю нажатую кнопку, т.е. если мышкой нажать на button[data-number="1"], например, а потом нажимать
+        // Space или Enter, то фокус же будет на этой кнопке и она будет кликаться. Поэтому эта часть закомментирвона.
+        // Если элементы были бы другие, например, блоки (div) с кнопками, то все бы заработало, либо можно было бы
+        // навесить на другую клавишу, скажем KeyZ или что-нибудь в этом духе, но не стал, вдруг будет не логично.
+        //
+        // case 'Space':
+        //     sign = '=';
+        //     break;
+    }
+
+    return sign
+}
+
+/**
+ * Функция-обработчик события клик на кнопки виртуальной клавиатуры
  *
  * @param {MouseEvent} event
  */
-function click(event) {
+function buttonClick(event) {
     if (event.target.tagName !== 'BUTTON') {
         return;
     }
 
-    if (event.target.dataset.number !== undefined || event.target.dataset.sign !== undefined) {
-        formInput.value = formInput.value + event.target.innerText;
-    } else if (event.target.dataset.reset !== undefined) {
-        init();
-    } else if (event.target.dataset.result !== undefined) {
-        calculate();
+    if (event.target.dataset.number) {
+        handlerNumber(event.target.dataset.number);
+    } else if (event.target.dataset.sign) {
+        handlerSign(event.target.dataset.sign);
+        markSign(event.target);
     }
 }
 
 /**
- * Функция подсчета введенного выражения
+ * Функция, обрабатывающая введенное число
  *
- * * Проверяет, что строка валидна, валидной строкой считается строка, где присутствует ровно один знак: +,-,*,/
+ * @param {string} strNumber
+ */
+function handlerNumber(strNumber) {
+    let propertyNumber = 'firstNumber';
+    if (expression.sign) {
+        propertyNumber = 'secondNumber';
+    }
+
+    let resultNumber = strNumber;
+    if (expression[propertyNumber] !== null) {
+        const previousNumber = calculatorDisplay.innerText;
+        resultNumber = previousNumber == 0 ? strNumber : previousNumber + strNumber;
+    }
+    calculatorDisplay.innerText = resultNumber;
+    expression[propertyNumber] = +resultNumber;
+}
+
+/**
+ * Функция, обрабатывающая выбранный символ (+,-,*,/,с,=)
+ *
+ * @param {string} sign
+ */
+function handlerSign(sign) {
+    const operations = ['+', '-', '*', '/'];
+
+    if (operations.includes(sign)) {
+        if (expression.secondNumber !== null) {
+            calculate();
+        }
+
+        expression.sign = sign;
+        return;
+    }
+
+    if (sign === '=' && expression.secondNumber !== null) {
+        calculate();
+        return;
+    }
+
+    if (sign === 'c') {
+        initExpression(0);
+    }
+}
+
+/**
+ * Функция, вычисляющая результат выражения, введенного пользователем
  */
 function calculate() {
-    const inputString = formInput.value;
-    const matches = inputString.match(/[\+\-\/\*]/g) || [];
-
-    if (matches.length !== 1) {
-        alert('Извините, я могу вычислить выражения содержащие ровно один из знаков: +,-,*,/');
-        return;
-    }
-
-    const inputValues = inputString.split(matches[0]).map(elem => +elem);
-    let result = NaN;
-
-    switch (matches[0]) {
+    let result;
+    switch (expression.sign) {
         case '+':
-            result = inputValues[0] + inputValues[1];
+            result = expression.firstNumber + expression.secondNumber;
             break;
         case '-':
-            result = inputValues[0] - inputValues[1];
+            result = expression.firstNumber - expression.secondNumber;
             break;
         case '*':
-            result = inputValues[0] * inputValues[1];
+            result = expression.firstNumber * expression.secondNumber;
             break;
         case '/':
-            try {
-                result = inputValues[0] / inputValues[1];
-            } catch (e) {}
+            result = expression.firstNumber / expression.secondNumber;
             break;
     }
 
-    if (isNaN(result)) {
-        alert('Введены некорректные значения');
-        return;
-    }
-
-    init(result);
+    initExpression(result);
 }
 
 /**
- * Функция, сбрасывает форму и устанавливае результат равный result
+ * Функция инициализирующая переменную expression и отображающая значение expression.firstNumber в calculatorDisplay
  *
- * @param {number} result
+ * @param {Number} withFirstNumber
  */
-function init(result = 0) {
-    outputTag.innerText = `Результат: ${result}`;
-    form.reset();
+function initExpression(withFirstNumber) {
+    expression.firstNumber = withFirstNumber;
+    expression.sign = null;
+    expression.secondNumber = null;
+
+    calculatorDisplay.innerText = withFirstNumber;
+}
+
+/**
+ * Функция, помечающая (на виртуальной клавиатуре) выбранный символ (+,-,*,/,с,=)
+ *
+ * @param {HTMLButtonElement} element
+ */
+function markSign(element) {
+    const markedItem = document.querySelector('.active-sign');
+    if (markedItem) {
+        markedItem.classList.remove('active-sign');
+    }
+
+    element.classList.add('active-sign');
 }
