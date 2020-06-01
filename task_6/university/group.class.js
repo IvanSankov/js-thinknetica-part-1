@@ -59,10 +59,7 @@ function Group(number) {
      * @returns {Student[]}
      */
     this.findAbsentStudents = function () {
-        const currentStudentIds = this._students.reduce((acc, curr) => {
-            acc.push(curr.getFullName());
-            return acc;
-        }, []);
+        const currentStudentIds = this._students.map(item => item.getFullName());
 
         return this._all_students.filter((student) => !currentStudentIds.includes(student.getFullName()));
     }
@@ -77,7 +74,7 @@ function Group(number) {
      * @returns {Student[]}
      */
     this.findSickStudents = function () {
-        return this._students.filter(student => !student.isHealthy());
+        return this._students.filter(student => !student.getIsHealthy());
     }
 
     /**

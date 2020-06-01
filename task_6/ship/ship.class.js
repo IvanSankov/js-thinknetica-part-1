@@ -20,6 +20,12 @@ function Ship(name, model, position) {
     // private property
     this._isAnchorDropped = false;
 
+    const directions = {
+        n: {x: 0, y: -1},
+        w: {x: -1, y: 0},
+        s: {x: 0, y: 1},
+        e: {x: 1, y: 0},
+    };
 
     // Далее только функции
 
@@ -38,13 +44,6 @@ function Ship(name, model, position) {
      * @returns {CPosition}
      */
     this.move = function (direction, distance = 1) {
-        const directions = {
-            n: {x: 0, y: -1},
-            w: {x: -1, y: 0},
-            s: {x: 0, y: 1},
-            e: {x: 1, y: 0},
-        };
-
         const directionVector = directions[direction];
         if (!directionVector) {
             throw new Error(`"${direction}" является не допустимым направлением движения.`)

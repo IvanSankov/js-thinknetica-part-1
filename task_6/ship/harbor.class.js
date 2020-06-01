@@ -31,11 +31,17 @@ function Harbor(position, ships = {}) {
      *
      * * Снимает корабль ship с якоря
      * * Удаляет из this.ships корабль ship
+     * * Проверяет, что корабль в гавани
      *
      * @param ship
      */
     this.unmoor = function (ship) {
         this._validate(ship);
+
+        if (!(ship.name in this.ships)) {
+            throw new Error(`Корабль ${ship.name} не был пришвартован к бухте {x:${this.position.x}, y:${this.position.y}`)
+        }
+
         ship.raiseAnchor();
         delete this.ships[ship.name];
     }

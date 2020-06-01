@@ -36,17 +36,12 @@ function Student(fullName) {
     }
 
     /**
-     * Помечает, что студент заболел
+     * Устанавливает состояние студента
+     *
+     * @param {boolean} isHealthy
      */
-    this.getSick = function () {
-        this._isHealthy = false;
-    }
-
-    /**
-     * Помечает, что студент здоров
-     */
-    this.recover = function () {
-        this._isHealthy = true;
+    this.setIsHealthy = function (isHealthy) {
+        this._isHealthy = isHealthy;
     }
 
     /**
@@ -54,7 +49,7 @@ function Student(fullName) {
      *
      * @returns {boolean}
      */
-    this.isHealthy = function () {
+    this.getIsHealthy = function () {
         return this._isHealthy;
     }
 }
