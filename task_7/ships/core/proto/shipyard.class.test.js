@@ -24,7 +24,7 @@ describe('Class Shipyard', function () {
     describe('Function repairShip', function () {
         it('first argument is not Ship', function () {
             expect(() => shipyard.repairShip())
-                .to.throw('На это верфи вы можете производить только корабли типа');
+                .to.throw(Error);
         });
         it('first argument is Bot, but shipyard only for Sailing Ship', function () {
             shipyard._factory = Boat;
@@ -32,7 +32,7 @@ describe('Class Shipyard', function () {
             shipyard._factory = SailingShip;
 
             expect(() => shipyard.repairShip(boat))
-                .to.throw('На это верфи вы можете производить только корабли типа');
+                .to.throw(Error);
         });
         it('корабль не на верфи', function () {
             shipyard._factory = Boat;
@@ -75,7 +75,7 @@ describe('Class Shipyard', function () {
     describe('Function replaceShip', function () {
         it('first argument is not Ship', function () {
             expect(() => shipyard.replaceShip())
-                .to.throw('На это верфи вы можете производить только корабли типа');
+                .to.throw(Error);
         });
         it('first argument is Bot, but shipyard only for Sailing Ship', function () {
             shipyard._factory = Boat;
@@ -83,7 +83,7 @@ describe('Class Shipyard', function () {
             shipyard._factory = SailingShip;
 
             expect(() => shipyard.replaceShip(boat))
-                .to.throw('На это верфи вы можете производить только корабли типа');
+                .to.throw(Error);
         });
         it('корабль не на верфи', function () {
             shipyard._factory = Boat;
@@ -92,7 +92,7 @@ describe('Class Shipyard', function () {
             boat.move('n');
 
             expect(() => shipyard.replaceShip(boat))
-                .to.throw(`Корабль boat не находится на этой верфи`);
+                .to.throw(Error);
         });
         it('Передаем корректные параметры', function () {
             shipyard._factory = Boat;

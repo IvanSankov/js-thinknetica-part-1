@@ -123,7 +123,7 @@ function Ship() {
      * @param {number} state
      */
     this.setState = function (state) {
-        if (state < 0 || state > 100) {
+        if (isNaN(state) || state < 0 || state > 100) {
             throw new Error(`Корабль ${this.name} не может принять состояние равное ${state}.`);
         }
 

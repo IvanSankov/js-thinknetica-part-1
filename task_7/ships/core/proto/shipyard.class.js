@@ -36,13 +36,7 @@ function Shipyard() {
      * @returns {undefined}
      */
     this.repairShip = function (ship, state) {
-        if (!(ship instanceof this._getFactory)) {
-            throw new Error(`На это верфи вы можете производить только корабли типа ${this._getFactory()}`);
-        }
-
-        if (!this._isShipInShipyard(ship)) {
-            throw new Error(`Корабль ${ship.name} не находится на этой верфи`);
-        }
+        this._validate(ship);
 
         ship.setState(state);
     }
@@ -71,13 +65,7 @@ function Shipyard() {
      * @returns {Ship}
      */
     this.replaceShip = function (ship) {
-        if (!(ship instanceof this._getFactory)) {
-            throw new Error(`На это верфи вы можете производить только корабли типа ${this._getFactory()}`);
-        }
-
-        if (!this._isShipInShipyard(ship)) {
-            throw new Error(`Корабль ${ship.name} не находится на этой верфи`);
-        }
+        this._validate(ship);
 
         return this.buildShip(...ship.getParams());
     }
@@ -105,7 +93,7 @@ function Shipyard() {
             throw new Error(`Вы должны указать класс, из которого будет создан корабль.`);
         }
 
-        if (!(this._factory instanceof Ship)) {
+        if (!(this._factory.prototype instanceof Ship)) {
             throw new Error(`Фабрика должна быть дочерним элементом класса Ship`);
         }
 
@@ -125,6 +113,16 @@ function Shipyard() {
         const shipyardPosition = this.getPosition();
 
         return shipPosition.x === shipyardPosition.x && shipPosition.y === shipyardPosition.y;
+    }
+
+    this._validate = function (ship) {
+        if (!(ship instanceof this._getFactory())) {
+            throw new Error(`На это верфи вы можете производить корабли данного типа.`);
+        }
+
+        if (!this._isShipInShipyard(ship)) {
+            throw new Error(`Корабль ${ship.name} не находится на этой верфи`);
+        }
     }
 }
 

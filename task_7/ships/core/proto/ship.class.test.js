@@ -105,7 +105,7 @@ describe('Class Ship', function () {
     describe('Function setState', function () {
         it('argument is not a number', function () {
             expect(() => ship.setState('1, 2'))
-                .to.throw('Корабль Test не может принять состояние равное 1,2.');
+                .to.throw(Error);
         });
         it('argument is 50', function () {
             ship.setState(50);
