@@ -95,13 +95,18 @@ function Shipyard() {
      * Отдает класс, из которого должен быть создан корабль
      *
      * * Проверяет, что такой класс есть
+     * * Проверяет, класс-шаблон является дочерним элементом класса Ship
      *
      * @returns {Ship}
      * @private
      */
     this._getFactory = function () {
         if (!this._factory) {
-            throw new Error(`Вы должны указать класс, из которого будет создан корабль.`)
+            throw new Error(`Вы должны указать класс, из которого будет создан корабль.`);
+        }
+
+        if (!(this._factory instanceof Ship)) {
+            throw new Error(`Фабрика должна быть дочерним элементом класса Ship`);
         }
 
         return this._factory;
