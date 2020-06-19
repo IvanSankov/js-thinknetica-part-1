@@ -22,7 +22,7 @@ function Boat(name, position, power, material) {
         throw new Error('Необходима указать можность корабля');
     }
 
-    if (!power) {
+    if (!material) {
         throw new Error('Необходима указать материал из которого сделан корабль');
     }
 
@@ -32,8 +32,8 @@ function Boat(name, position, power, material) {
     this.material = material;
 
     this.getParams = function () {
-        return [this.name, this._position, this.power, this.material];
+        return [this.name, this.power, this.material];
     }
 }
 
-Boat.prototype = shipProto;
+Boat.prototype = new Ship();

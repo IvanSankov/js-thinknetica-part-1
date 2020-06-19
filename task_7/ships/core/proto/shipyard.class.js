@@ -125,5 +125,3 @@ function Shipyard() {
         }
     }
 }
-
-const shipyardProto = new Shipyard();

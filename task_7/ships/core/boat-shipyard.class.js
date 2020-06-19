@@ -15,4 +15,4 @@ function BoatShipyard(position) {
     this._factory = Boat;
 }
 
-BoatShipyard.prototype = shipyardProto;
+BoatShipyard.prototype = new Shipyard();

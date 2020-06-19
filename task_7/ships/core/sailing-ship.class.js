@@ -32,8 +32,8 @@ function SailingShip(name, position, numberMasts, sailArea) {
     this.sailArea = sailArea;
 
     this.getParams = function () {
-        return [this.name, this._position, this.numberMasts, this.sailArea];
+        return [this.name, this.numberMasts, this.sailArea];
     }
 }
 
-SailingShip.prototype = shipProto;
+SailingShip.prototype = new Ship();

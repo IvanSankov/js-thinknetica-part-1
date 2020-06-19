@@ -157,5 +157,3 @@ function Ship() {
         throw new Error(`Необходимо имплиментировать метод.`);
     }
 }
-
-const shipProto = new Ship();

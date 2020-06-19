@@ -118,8 +118,12 @@ describe('Class Shipyard', function () {
         });
         it('factory is Ship', function () {
             shipyard._factory = Boat;
-            expect(() => shipyard._getFactory())
-                .to.deep.equal(Boat);
+
+            expect(typeof(shipyard._getFactory()))
+                .to.equal('function');
+
+            expect(shipyard._getFactory().name)
+                .to.equal('Boat');
         });
     });
 });
