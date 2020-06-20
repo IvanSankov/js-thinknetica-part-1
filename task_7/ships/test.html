@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+<script>
+    function test1() {
+        this.q = function () {
+            console.log('qq');
+        }
+    }
+
+    function test2() {
+        this.w = function () {
+            console.log('ww');
+        }
+    }
+
+    function test3() {
+        this.e = function () {
+            console.log('ee');
+        }
+    }
+
+    function test4() {
+        this.a = function () {
+            console.log('aa');
+        }
+    }
+
+    function test5() {
+        this.s = function () {
+            console.log('ss');
+        }
+    }
+
+    function test6() {
+        this.d = function () {
+            console.log('dd');
+        }
+    }
+
+    let t1 = new test1();
+    test2.prototype = t1;
+    test3.prototype = t1;
+
+    test5.prototype = new test4();
+    test6.prototype = new test4();
+
+    let t2 = new test2();
+    let t3 = new test3();
+
+    let t5 = new test5();
+    let t6 = new test6();
+
+    console.log('t2 instanceof test3: ' + (t2 instanceof test3));
+    console.log('t2 instanceof test1: ' + (t2 instanceof test1));
+
+    console.log('---------------------------------------------');
+
+    console.log('t3 instanceof test2: ' + (t3 instanceof test2));
+    console.log('t3 instanceof test1: ' + (t3 instanceof test1));
+
+    console.log('*********************************************');
+    console.log('*********************************************');
+
+    console.log('t5 instanceof test4: ' + (t5 instanceof test4));
+    console.log('t5 instanceof test5: ' + (t5 instanceof test5));
+    console.log('t5 instanceof test6: ' + (t5 instanceof test6));
+
+    console.log('---------------------------------------------');
+
+    console.log('t6 instanceof test4: ' + (t6 instanceof test4));
+    console.log('t6 instanceof test5: ' + (t6 instanceof test5));
+    console.log('t6 instanceof test6: ' + (t6 instanceof test6));
+
+</script>
+
+</body>
+</html>
