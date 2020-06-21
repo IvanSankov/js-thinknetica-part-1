@@ -31,8 +31,9 @@ htmlDivElement.variables = 'заменить каждое вхождение';
 htmlDivElement.styles = {
     background: 'yellow',
 };
-htmlDivElement.render();
+
 htmlDivElement.onClick = onClick;
+htmlDivElement.render();
 
 /* ------------------------------------------------------ */
 
@@ -48,3 +49,4 @@ const htmlInputElement = new HtmlInput();
 htmlInputElement.target = input;
 htmlInputElement.onFocus = onFocus;
 htmlInputElement.onInput = onInput;
+htmlInputElement.render();

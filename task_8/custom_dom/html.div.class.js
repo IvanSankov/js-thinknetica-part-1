@@ -3,6 +3,7 @@
 class HtmlDiv extends HtmlElement {
     constructor() {
         super();
+        this._onClick = null;
     }
 
     set target(value) {
@@ -14,6 +15,18 @@ class HtmlDiv extends HtmlElement {
     }
 
     set onClick(fn) {
-        this._target.onclick = fn;
+        if (typeof fn !== 'function') {
+            throw new Error('Аргумент должен быть функцией.');
+        }
+
+        this._onClick = fn;
+    }
+
+    render() {
+        super.render();
+
+        if (this._onClick) {
+            this._target.onclick = this._onClick;
+        }
     }
 }

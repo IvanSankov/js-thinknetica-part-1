@@ -3,6 +3,8 @@
 class HtmlInput extends HtmlElement{
     constructor() {
         super();
+        this._onInput = null;
+        this._onFocus = null;
     }
 
     set target(value) {
@@ -14,10 +16,30 @@ class HtmlInput extends HtmlElement{
     }
 
     set onInput(fn) {
-        this._target.oninput = fn;
+        if (typeof fn !== 'function') {
+            throw new Error('Аргумент должен быть функцией.');
+        }
+
+        this._onInput = fn;
     }
 
     set onFocus(fn) {
-        this._target.onfocus = fn;
+        if (typeof fn !== 'function') {
+            throw new Error('Аргумент должен быть функцией.');
+        }
+
+        this._onFocus = fn;
+    }
+
+    render() {
+        super.render();
+
+        if (this._onFocus) {
+            this._target.onfocus = this._onFocus;
+        }
+
+        if (this._onInput) {
+            this._target.oninput = this._onInput;
+        }
     }
 }
